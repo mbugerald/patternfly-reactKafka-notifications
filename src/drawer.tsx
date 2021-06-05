@@ -1,4 +1,4 @@
-import {ComponentState, FC, Fragment, useState} from 'react';
+import React, {ComponentState, FC, Fragment, useState} from 'react';
 import {
     Dropdown,
     DropdownItem,
@@ -19,12 +19,20 @@ import {
     NotificationDrawerListItemHeader,
     Title
 } from '@patternfly/react-core';
-import _css from './styles.module.scss';
 import {BellIcon, EnvelopeIcon, EnvelopeOpenIcon, ExclamationTriangleIcon, InfoIcon} from '@patternfly/react-icons';
 
+type globals = {
+    sender: string
+    message: string
+    date: string
+    type: "default" | "success" | "danger" | "warning" | "info" | undefined
+    variant: string
+    is_read: boolean
+}
+
 interface Props {
-    messages: object[]
-    notifications: object[]
+    messages: globals[]
+    notifications: globals[]
     lang: string
     toggleReadNotification: ComponentState,
     toggleReadMessage: ComponentState,
@@ -48,19 +56,19 @@ const KafkaWSSDrawer:FC<Props> = ({
     const [ firstGroupExpanded, setFirstGroupExpanded ] = useState<boolean>(false)
     const [ secondGroupExpanded, setSecondGroupExpanded ] = useState<boolean>(false)
 
-    const onToggle = (id, isOpen) => {
-        setIsOpenMap( { [id]: isOpen });
+    const onToggle = (id: string, isOpen: boolean) => {
+        setIsOpenMap({ [id] : isOpen });
     }
 
     const onSelect = () => {
         setIsOpenMap(null)
     }
 
-    const toggleFirstDrawer = (event, value) => {
+    const toggleFirstDrawer = (_event: any, value: boolean | ((prevState: boolean) => boolean)) => {
         setFirstGroupExpanded(value)
     }
 
-    const toggleSecondDrawer = (event, value) => {
+    const toggleSecondDrawer = (_event: any, value: boolean | ((prevState: boolean) => boolean)) => {
         setSecondGroupExpanded(value)
     }
 
@@ -68,32 +76,32 @@ const KafkaWSSDrawer:FC<Props> = ({
         <Fragment key="link">
             {appMessagesLocation &&
             <DropdownItem key="link_child" href={appMessagesLocation}>
-                {(!lang || lang === "en") ? "See all": "Voir tout"}
+                {(!lang || lang === "en") ? "See all" : "Voir tout"}
             </DropdownItem>}
         </Fragment>,
         <DropdownItem key="mark_as_read" onClick={() => markAllAsRead()}>
-            {(!lang || lang === "en") ? "Mark all as read": "Marquer tous comme lu"}
+            {(!lang || lang === "en") ? "Mark all as read" : "Marquer tous comme lu"}
         </DropdownItem>
 
     ];
 
     const countUnread = () => {
-        const messagesCount = messages.filter((message) => message["is_read"] === false)
-        const notificationCount = notifications.filter((notification) => notification["is_read"] === false)
-        return messagesCount.length +  notificationCount.length
+        const messagesCount = messages.filter((message) => !message["is_read"])
+        const notificationCount = notifications.filter((notification) => !notification["is_read"])
+        return messagesCount.length + notificationCount.length
     }
 
     const countUnreadNotifications = () => {
-        const notificationCount = notifications.filter((notification) => notification["is_read"] === false)
+        const notificationCount = notifications.filter((notification) => !notification["is_read"])
         return notificationCount.length
     }
 
     const countUnreadMessages = () => {
-        const messagesCount = messages.filter((message) => message["is_read"] === false)
+        const messagesCount = messages.filter((message) => !message["is_read"])
         return messagesCount.length
     }
 
-    const toggleNotificationIcon = (type: string) => {
+    const toggleNotificationIcon = (type: string | undefined) => {
         switch (type) {
             case "info":
                 return <InfoIcon/>
@@ -106,16 +114,17 @@ const KafkaWSSDrawer:FC<Props> = ({
 
     return (
         <Fragment>
-            <div className={_css.drawer}>
+            <div className="drawer">
                 <NotificationDrawer>
                     <NotificationDrawerHeader
                         count={countUnread()}
-                        unreadText={(!lang || lang === "en") ? " unread": " non lu"}
+                        unreadText={(!lang || lang === "en") ? " unread" : " non lu"}
                         onClose={toggleDrawer}
                     >
                         <Dropdown
                             onSelect={onSelect}
-                            toggle={<KebabToggle onToggle={isOpen => onToggle('toggle-id-0', isOpen)} id="toggle-id-0" />}
+                            toggle={<KebabToggle onToggle={isOpen => onToggle('toggle-id-0', isOpen)}
+                                                 id="toggle-id-0"/>}
                             isOpen={isOpenMap && isOpenMap['toggle-id-0']}
                             isPlain
                             dropdownItems={dropdownItems}
@@ -135,14 +144,14 @@ const KafkaWSSDrawer:FC<Props> = ({
                                 {notifications.length <= 0 &&
                                 <NotificationDrawerList isHidden={!secondGroupExpanded}>
                                     <EmptyState variant={EmptyStateVariant.full}>
-                                        <EmptyStateIcon icon={BellIcon} />
+                                        <EmptyStateIcon icon={BellIcon}/>
                                         <Title headingLevel="h2" size="lg">
-                                            {(!lang || lang === "en") ? "No notifications": "Aucune notification"}
+                                            {(!lang || lang === "en") ? "No notifications" : "Aucune notification"}
                                         </Title>
                                         <EmptyStateBody>
                                             {(!lang || lang === "en") ?
-                                                "There are currently no notifications alerts for you at the moment.":
-                                            "Il n'y a actuellement aucune alerte de notification pour vous à l'instant."}
+                                                "There are currently no notifications alerts for you at the moment." :
+                                                "Il n'y a actuellement aucune alerte de notification pour vous à l'instant."}
                                         </EmptyStateBody>
                                     </EmptyState>
                                 </NotificationDrawerList>}
@@ -176,13 +185,13 @@ const KafkaWSSDrawer:FC<Props> = ({
                                 {messages.length <= 0 &&
                                 <NotificationDrawerList isHidden={!firstGroupExpanded}>
                                     <EmptyState variant={EmptyStateVariant.full}>
-                                        <EmptyStateIcon icon={EnvelopeIcon} />
+                                        <EmptyStateIcon icon={EnvelopeIcon}/>
                                         <Title headingLevel="h2" size="lg">
-                                            {(!lang || lang === "en") ? "No messages": "Aucune message"}
+                                            {(!lang || lang === "en") ? "No messages" : "Aucune message"}
                                         </Title>
                                         <EmptyStateBody>
                                             {(!lang || lang === "en") ?
-                                                "There are currently no messages alerts for you at the moment.":
+                                                "There are currently no messages alerts for you at the moment." :
                                                 "Il n'y a actuellement aucune alerte de message pour vous à l'instant."}
                                         </EmptyStateBody>
                                     </EmptyState>
@@ -198,7 +207,7 @@ const KafkaWSSDrawer:FC<Props> = ({
                                             <NotificationDrawerListItemHeader
                                                 variant={message["type"]}
                                                 title={message["sender"]}
-                                                icon={message["is_read"] ? <EnvelopeOpenIcon/>:<EnvelopeIcon/>}
+                                                icon={message["is_read"] ? <EnvelopeOpenIcon/> : <EnvelopeIcon/>}
                                                 srTitle={message["message"]}
                                             />
                                             <NotificationDrawerListItemBody timestamp={message["date"]}>

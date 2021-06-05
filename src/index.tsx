@@ -1,7 +1,7 @@
-import {createContext, FC, Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {createContext, FC, Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import 'index.css'
 import {Alert, AlertActionCloseButton, Text} from '@patternfly/react-core';
 import {w3cwebsocket} from 'websocket';
-import _css from './styles.module.scss';
 import 'moment/locale/fr';
 import {EnvelopeIcon, InfoIcon, WarningTriangleIcon} from '@patternfly/react-icons';
 import GroupNotificationDrawer from './drawer';
@@ -15,9 +15,18 @@ interface Props {
     appMessagesLocation?: string
 }
 
+type globals = {
+    sender: string
+    message: string
+    date: string
+    type: "default" | "success" | "danger" | "warning" | "info" | undefined
+    variant: string
+    is_read: boolean
+}
+
 type Messages = {
-    messages: object[]
-    notifications: object[]
+    messages: globals[]
+    notifications: globals[]
 }
 
 let moment = require('moment');
@@ -97,7 +106,7 @@ const KafkaWssNotifications:FC<Props> = ({
             }
             sendNumber();
         };
-        client.onmessage = (e) => {
+        client.onmessage = (e: { data: string; }) => {
             moment.locale(lang)
             const response = JSON.parse(e.data);
             const temp = {...wss};
@@ -127,24 +136,26 @@ const KafkaWssNotifications:FC<Props> = ({
         const notifications = temp.notifications
         // eslint-disable-next-line array-callback-return
         messages.map((message) => {
-            if (message["is_read"] === false)
+            if (!message["is_read"])
                 message["is_read"] = true
         })
         // eslint-disable-next-line array-callback-return
         notifications.map((notification) => {
-            if (notification["is_read"] === false)
+            if (!notification["is_read"])
                 notification["is_read"] = true
         })
         setWss(temp)
     }, [wss])
 
-    const processMessageIcons = (type: string) => {
+    const processMessageIcons = (type: string|undefined) => {
         switch (type) {
             case "info":
                 return <InfoIcon/>
             case "danger":
                 return <WarningTriangleIcon/>
             case "success":
+                return <EnvelopeIcon/>
+            default:
                 return <EnvelopeIcon/>
         }
     }
@@ -184,18 +195,18 @@ const KafkaWssNotifications:FC<Props> = ({
                     appMessagesLocation={appMessagesLocation}
                 />}
                 {!drawer &&
-                <div className={_css.container}>
+                <div className="container">
                     {wss.messages.length > 0 && wss.messages.map((message, idx) =>
                         <Alert
                             key={idx}
-                            className={_css.alert}
+                            className="alert"
                             variant={message["type"]}
                             customIcon={processMessageIcons(message["type"])}
                             timeout={8000}
                             title={message["sender"] ? message["sender"]: "NAN"}
                             actionClose={<AlertActionCloseButton onClose={() => closeMessage(idx)}/>}
                         >
-                            <Text>{moment(message["timestamp"]).format("LLL")}</Text>
+                            <Text>{moment(message["date"]).format("LLL")}</Text>
                             <Text>{message["message"].substring(0, 150) + " ..."}</Text>
                             {appMessagesLocation && <a href={appMessagesLocation}>More...</a>}
                         </Alert>)}

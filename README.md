@@ -1,24 +1,34 @@
 # React-kafka-context
 
-<table style="margin: 50px auto;">
-  <tr>
-    <td valign="top" style="border:none;"><img alt="patternfly" hspace="20" height="200" width="200" src="https://pbs.twimg.com/profile_images/1248314779812294656/DKsPlKdl.png"/></td>
-    <td valign="top" style="border:none;"><img alt="react" hspace="20" height="200" width="200" src="https://mildaintrainings.com/wp-content/uploads/2017/11/react-logo.png"/></td>
-    <td valign="top" style="border:none;"><img alt="kafka" hspace="20" height="200" width="200" src="https://www.indellient.com/wp-content/uploads/2020/10/20201021_Introduction-to-Apache-Kafka_BLOG-FEATURED-IMAGE.jpg"/></td>
+
+#### Installation 
+
+`npm -i patternfly-reactkafka-notifications --save`
+
+or
+
+`yarn add patternfly-reactkafka-notifications`
+
+<table style="margin: 50px auto;border:0;">
+  <tr style="border:0;">
+    <td style="border:0;"><img alt="patternfly" height="200" width="200" src="https://pbs.twimg.com/profile_images/1248314779812294656/DKsPlKdl.png"/></td>
+    <td style="border:0;"><img alt="react" height="200" width="200" src="https://mildaintrainings.com/wp-content/uploads/2017/11/react-logo.png"/></td>
+    <td style="border:0;"><img alt="kafka" height="200" width="200" src="https://www.indellient.com/wp-content/uploads/2020/10/20201021_Introduction-to-Apache-Kafka_BLOG-FEATURED-IMAGE.jpg"/></td>
   </tr>
  </table>
 
 This is a custom react context component, to be used as an exchange point between Kafka
-and any given react application. In order for this to work, it is required that the context
+and any given react application. In order for this to work, it is required that the context 
 be placed as a canopy to the component that will be consuming incoming messages. Unfortunately,
 this is a local library, and it will require you install the following packages for it to run properly.
-Please note the module is build on React Typescript, therefore ensure before using this module
+Please note the module is build on React Typescript, therefore ensure before using this module 
 that your application is using <b>React + Typescript</b>.
 
         - @patternfly/react-core
         - @patternfly/react-icons
+        - @patternfly/react-icon
         - websocket && @types/websocket
-        - momentjs
+        - momentjs && @types/momentjs 
 
 Install dependencies:
 #### With Yarn
@@ -29,25 +39,25 @@ Install dependencies:
 
 #### Implementation
 Once that is done, in order to start receiving messages from Kafka backend, it is required to pass in
-a couple of props.
+a couple of props. 
 
-- <b>lang</b>: This component property will be the indicative of the preferred language by default its english, for the
-  moment you can choose between en and french <b>"en"</b> | <b>"fr"</b>
-
+- <b>lang</b>: This component property will be the indicative of the preferred language by default its english, for the 
+moment you can choose between en and french <b>"en"</b> | <b>"fr"</b>
+  
 - <b>uri</b>: Expect web socket uri to connect to, channel where incoming messages will be streaming in through.
-
-- <b>isDrawer</b>: this property is called when expected view chosen should be a drawer or list of pop ups. By default, the property is
-  set to false if not included in the component.
-
+  
+- <b>isDrawer</b>: this property is called when expected view chosen should be a drawer or list of pop ups. By default, the property is 
+set to false if not included in the component.
+  
 - <b>appMessagesLocation</b>: This is an optional link property, in case a view or page is created listing out all messages in the main app
-  pass in the link into this parameter it will display the see all messages. If clicked on the browser would redirect to the given link.
-
+pass in the link into this parameter it will display the see all messages. If clicked on the browser would redirect to the given link.
+  
 #### Implementationkafka_sockets
 
 - in your `App.jsx` or preferred child component of choice add the following:
 
 ```
-    import KafkaWSS from "./contexts/kafka_sockets";
+    import {KafkaWSSContext} from "patternfly-reactkafka-notifications";
     import {NotificationBadge} from "@patternfly/react-core";
     
     const {
@@ -83,18 +93,18 @@ a couple of props.
     />
 ```
 
-- in your `index.jsx` or parent component of choice add the following:
+ - in your `index.jsx` or parent component of choice add the following:
 ````
-    
-  import KafkaWssNotifications from "./contexts/kafka_sockets";
+   
+  import KafkaWssNotifications from 'patternfly-reactkafka-notifications';
   
-  const clientId = "clickid"
-  const topic = "clickid-preproduction"
+  const clientId = "xxxxxxx"
+  const topic = "xxxxxxx"
 
   <KafkaWssNotifications
         isDrawer * Optional
         lang={"fr"} * Mandatory
-        uri={`wss://kafka-websocket-proxy.gcloud.bara.ca/socket/out?clientId=${clientId}&topic=${topic}&valType=json`} * Mandatory
+        uri={`wss://xxxxxxxxxx.com/socket/out?clientId=${clientId}&topic=${topic}&valType=json`} * Mandatory
         appMessagesLocation={"https://google.com"} * Optional
     >
         <App/>

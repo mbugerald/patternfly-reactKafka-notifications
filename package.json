@@ -1,52 +1,84 @@
 {
-  "name": "patternfly-reactkafka-notifications",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@loadable/component": "^5.13.2",
-    "@patternfly/react-core": "^4.121.1",
-    "@patternfly/react-icons": "^4.10.7",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/websocket": "^1.0.2",
-    "momentjs": "^2.0.0",
-    "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-requests-fetch": "^0.2.4",
-    "react-scripts": "3.4.3",
-    "typescript": "~4.0.3",
-    "websocket": "^1.0.34"
+  "version": "0.1.3",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "peerDependencies": {
+    "react": ">=16"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "patternfly-reactkafka-notifications",
+  "author": "M G (MkBank)",
+  "module": "dist/patternfly-reactkafka-notifications.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/patternfly-reactkafka-notifications.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/patternfly-reactkafka-notifications.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "react-app-rewire-disable-chunks": "^0.0.1",
-    "react-app-rewired": "^2.1.6"
+    "@size-limit/preset-small-lib": "^4.11.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/node-sass": "^4.11.1",
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
+    "husky": "^6.0.0",
+    "node-sass": "4.14.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "size-limit": "^4.11.0",
+    "tsdx": "^0.11.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.3.2",
+    "web-vitals": "^1.0.1"
   },
-  "config-overrides-path": "node_modules/react-app-rewire-disable-chunks"
+  "dependencies": {
+    "@patternfly/react-core": "^4.121.1",
+    "@patternfly/react-icons": "^4.10.7",
+    "@types/moment": "^2.13.0",
+    "@types/websocket": "^1.0.2",
+    "@wessberg/rollup-plugin-ts": "^1.3.14",
+    "autoprefixer": "^10.2.6",
+    "cssnano": "^5.0.5",
+    "moment": "^2.29.1",
+    "momentjs": "^2.0.0",
+    "react-scripts": "4.0.3",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-scss": "^2.6.1",
+    "websocket": "^1.0.34"
+  }
 }
