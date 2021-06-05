@@ -1,0 +1,2 @@
+# patternfly-reactkafka-notifications
+This is a custom react context component, to be used as an exchange point between Kafka and any given react application. In order for this to work, it is required that the context be placed as a canopy to the component that will be consuming incoming messages. Unfortunately, this is a local library, and it will require you install the following packages for it to run properly. Please note the module is build on React Typescript, therefore ensure before using this module that your application is using Patternfly 4 +React + Typescript
