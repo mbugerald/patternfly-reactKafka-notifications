@@ -1,8 +1,12 @@
 # React-kafka-context
 
-<img alt="patternfly" hspace="20" height="100" width="100" src="https://pbs.twimg.com/profile_images/1248314779812294656/DKsPlKdl.png"/>
-<img alt="react" hspace="20" height="100" width="100" src="https://mildaintrainings.com/wp-content/uploads/2017/11/react-logo.png"/>
-<img alt="kafka" hspace="20" height="100" width="100" src="https://www.indellient.com/wp-content/uploads/2020/10/20201021_Introduction-to-Apache-Kafka_BLOG-FEATURED-IMAGE.jpg"/>
+<table>
+  <tr>
+    <td valign="top"><img alt="patternfly" hspace="20" height="100" width="100" src="https://pbs.twimg.com/profile_images/1248314779812294656/DKsPlKdl.png"/></td>
+    <td valign="top"><img alt="react" hspace="20" height="100" width="100" src="https://mildaintrainings.com/wp-content/uploads/2017/11/react-logo.png"/></td>
+    <td valign="top"><img alt="kafka" hspace="20" height="100" width="100" src="https://www.indellient.com/wp-content/uploads/2020/10/20201021_Introduction-to-Apache-Kafka_BLOG-FEATURED-IMAGE.jpg"/></td>
+  </tr>
+ </table>
 
 This is a custom react context component, to be used as an exchange point between Kafka
 and any given react application. In order for this to work, it is required that the context
