@@ -1,5 +1,5 @@
 {
-  "version": "0.1.3",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,16 +33,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "patternfly-reactkafka-notifications",
+  "name": "patternfly-kafkareact-notifications",
   "author": "M G (MkBank)",
-  "module": "dist/patternfly-reactkafka-notifications.esm.js",
+  "module": "dist/patternfly-kafkareact-notifications.esm.js",
   "size-limit": [
     {
-      "path": "dist/patternfly-reactkafka-notifications.cjs.production.min.js",
+      "path": "dist/patternfly-kafkareact-notifications.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/patternfly-reactkafka-notifications.esm.js",
+      "path": "dist/patternfly-kafkareact-notifications.esm.js",
       "limit": "10 KB"
     }
   ],
@@ -53,11 +53,9 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
-    "@types/node-sass": "^4.11.1",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "husky": "^6.0.0",
-    "node-sass": "4.14.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "size-limit": "^4.11.0",
@@ -71,14 +69,9 @@
     "@patternfly/react-icons": "^4.10.7",
     "@types/moment": "^2.13.0",
     "@types/websocket": "^1.0.2",
-    "@wessberg/rollup-plugin-ts": "^1.3.14",
-    "autoprefixer": "^10.2.6",
-    "cssnano": "^5.0.5",
+    "index.css": "^1.0.0",
     "moment": "^2.29.1",
     "momentjs": "^2.0.0",
-    "react-scripts": "4.0.3",
-    "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-scss": "^2.6.1",
     "websocket": "^1.0.34"
   }
 }

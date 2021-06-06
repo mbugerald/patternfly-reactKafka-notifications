@@ -1,4 +1,4 @@
-.container {
+.prkw-container {
     position: absolute;
     height: 100vh;
     right: 0;
@@ -8,7 +8,7 @@
     z-index: 3;
 }
 
-.alert {
+.prkw-alert {
     width: 100%;
     right: 4px;
     margin-top: 8px;
@@ -19,7 +19,7 @@
     text-overflow: ellipsis;
 }
 
-.drawer {
+.prkw-drawer {
     position: fixed;
     height: 100vh;
     right: 0;
@@ -30,8 +30,11 @@
 }
 
 @media screen and (max-width: 991px) {
-    .container .drawer {
+    .prkw-container {
         width: 100%;
         box-shadow: none;
+    }
+    .prkw-drawer {
+        width: 100%;
     }
 }
