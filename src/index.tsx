@@ -111,6 +111,7 @@ const KafkaWssNotifications:FC<Props> = ({
             const temp = {...wss};
             const content = {
                 sender: response.value?.value.sender,
+                receiver: response.value?.value.receiver,
                 message: response.value?.value.message,
                 date: moment(response.timestamp).format("LLL"),
                 type: response.value?.value.type,

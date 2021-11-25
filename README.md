@@ -77,7 +77,7 @@ pass in the link into this parameter it will display the see all messages. If cl
     useEffect(() => {
         const temp = {
             messages: [],
-            notifications: [ { "sender": "Sam Smith", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:39", "type": "danger", "variant": "message", "is_read": true }, { "sender": "Sam Smith", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:39", "type": "success", "variant": "message", "is_read": true }, { "sender": "Sam Smith", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:38", "type": "info", "variant": "message", "is_read": false }, { "sender": "Sam Smith", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:38", "type": "info", "variant": "message", "is_read": false }, { "sender": "Sam Smith", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:35", "type": "info", "variant": "message", "is_read": true } ]
+            notifications: [ { "sender": "Sam Smith","receiver": "public@bara.ca", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:39", "type": "danger", "variant": "message", "is_read": true }, { "sender": "Sam Smith","receiver": "public@bara.ca", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:39", "type": "success", "variant": "message", "is_read": true }, { "sender": "Sam Smith","receiver": "public@bara.ca", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:38", "type": "info", "variant": "message", "is_read": false }, { "sender": "Sam Smith","receiver": "public@bara.ca", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:38", "type": "info", "variant": "message", "is_read": false }, { "sender": "Sam Smith","receiver": "public@bara.ca", "message": "this is a test from kafka-web-proxy", "date": "1 juin 2021 09:35", "type": "info", "variant": "message", "is_read": true } ]
         }
         setWss(temp)
         // eslint-disable-next-line
@@ -166,7 +166,7 @@ send as request the frame below:
 
         - LINK: wscat  -c "wss://xxxxxx.xxx/socket/in?clientId=clickid&topic=clickid-preproduction&valType=json"
         - Request Payload:
-            { "value": { "value": {"type":"info", "variant":"message", "sender": "Sam Smith", "message":"this is a test from kafka-web-proxy"}, "format": "json" } }
+            { "value": { "value": {"type":"info", "variant":"message", "sender": "Sam Smith","receiver": "public@bara.ca", "message":"this is a test from kafka-web-proxy"}, "format": "json" } }
 
 There are two variant types: <b>notification</b> and <b>message</b>, if a request payload does not contain one of the two,
 the response will bo be included in the list of messages. So the parameter <b>variant</b> is important.
@@ -177,6 +177,7 @@ for the card to be differentiated base on their colors.
     - types:  info | danger | success
     - message: string
     - sender: string
+    - receiver: string
     - format: string | json
 
 

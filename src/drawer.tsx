@@ -28,6 +28,7 @@ type globals = {
     type: "default" | "success" | "danger" | "warning" | "info" | undefined
     variant: string
     is_read: boolean
+    receiver?: string
 }
 
 interface Props {
