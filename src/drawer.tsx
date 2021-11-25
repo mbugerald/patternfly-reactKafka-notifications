@@ -86,18 +86,18 @@ const KafkaWSSDrawer:FC<Props> = ({
     ];
 
     const countUnread = () => {
-        const messagesCount = messages.filter((message) => !message["is_read"])
-        const notificationCount = notifications.filter((notification) => !notification["is_read"])
+        const messagesCount = messages.filter((message) => !message.is_read)
+        const notificationCount = notifications.filter((notification) => !notification.is_read)
         return messagesCount.length + notificationCount.length
     }
 
     const countUnreadNotifications = () => {
-        const notificationCount = notifications.filter((notification) => !notification["is_read"])
+        const notificationCount = notifications.filter((notification) => !notification.is_read)
         return notificationCount.length
     }
 
     const countUnreadMessages = () => {
-        const messagesCount = messages.filter((message) => !message["is_read"])
+        const messagesCount = messages.filter((message) => !message.is_read)
         return messagesCount.length
     }
 
@@ -114,7 +114,7 @@ const KafkaWSSDrawer:FC<Props> = ({
 
     return (
         <Fragment>
-            <div className="drawer">
+            <div className="prkw-drawer">
                 <NotificationDrawer>
                     <NotificationDrawerHeader
                         count={countUnread()}
@@ -159,18 +159,18 @@ const KafkaWSSDrawer:FC<Props> = ({
                                     {notifications.map((notification, idx) =>
                                         <NotificationDrawerListItem
                                             key={idx}
-                                            variant={notification["type"]}
-                                            isRead={notification["is_read"]}
+                                            variant={notification.type}
+                                            isRead={notification.is_read}
                                             onClick={() => toggleReadNotification(idx)}
                                         >
                                             <NotificationDrawerListItemHeader
-                                                variant={notification["type"]}
-                                                icon={toggleNotificationIcon(notification["type"])}
-                                                title={notification["sender"]}
-                                                srTitle={notification["message"]}
+                                                variant={notification.type}
+                                                icon={toggleNotificationIcon(notification.type)}
+                                                title={notification.sender}
+                                                srTitle={notification.message}
                                             />
-                                            <NotificationDrawerListItemBody timestamp={notification["date"]}>
-                                                {notification["message"]}
+                                            <NotificationDrawerListItemBody timestamp={notification.date}>
+                                                {notification.message}
                                             </NotificationDrawerListItemBody>
                                         </NotificationDrawerListItem>)}
                                 </NotificationDrawerList>
@@ -200,18 +200,18 @@ const KafkaWSSDrawer:FC<Props> = ({
                                     {messages.map((message, idx) =>
                                         <NotificationDrawerListItem
                                             key={idx}
-                                            variant={message["type"]}
-                                            isRead={message["is_read"]}
+                                            variant={message.type}
+                                            isRead={message.is_read}
                                             onClick={() => toggleReadMessage(idx)}
                                         >
                                             <NotificationDrawerListItemHeader
-                                                variant={message["type"]}
-                                                title={message["sender"]}
-                                                icon={message["is_read"] ? <EnvelopeOpenIcon/> : <EnvelopeIcon/>}
-                                                srTitle={message["message"]}
+                                                variant={message.type}
+                                                title={message.sender}
+                                                icon={message.is_read ? <EnvelopeOpenIcon/> : <EnvelopeIcon/>}
+                                                srTitle={message.message}
                                             />
-                                            <NotificationDrawerListItemBody timestamp={message["date"]}>
-                                                {message["message"]}
+                                            <NotificationDrawerListItemBody timestamp={message.date}>
+                                                {message.message}
                                             </NotificationDrawerListItemBody>
                                         </NotificationDrawerListItem>)}
                                 </NotificationDrawerList>

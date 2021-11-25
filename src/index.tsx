@@ -1,5 +1,4 @@
 import React, {createContext, FC, Fragment, useCallback, useEffect, useMemo, useState} from 'react';
-import 'index.css'
 import {Alert, AlertActionCloseButton, Text} from '@patternfly/react-core';
 import {w3cwebsocket} from 'websocket';
 import 'moment/locale/fr';
@@ -136,13 +135,13 @@ const KafkaWssNotifications:FC<Props> = ({
         const notifications = temp.notifications
         // eslint-disable-next-line array-callback-return
         messages.map((message) => {
-            if (!message["is_read"])
-                message["is_read"] = true
+            if (!message.is_read)
+                message.is_read = true
         })
         // eslint-disable-next-line array-callback-return
         notifications.map((notification) => {
-            if (!notification["is_read"])
-                notification["is_read"] = true
+            if (!notification.is_read)
+                notification.is_read = true
         })
         setWss(temp)
     }, [wss])
@@ -163,14 +162,14 @@ const KafkaWssNotifications:FC<Props> = ({
     const toggleReadMessage = useCallback((idx) => {
         const temp = {...wss};
         const message = temp.messages[idx];
-        message["is_read"] = true
+        message.is_read = true
         setWss(temp)
     }, [wss])
 
     const toggleReadNotification = useCallback((idx) => {
         const temp = {...wss};
         const notification = temp.notifications[idx];
-        notification["is_read"] = true
+        notification.is_read = true
         setWss(temp)
     }, [wss])
 
@@ -195,19 +194,19 @@ const KafkaWssNotifications:FC<Props> = ({
                     appMessagesLocation={appMessagesLocation}
                 />}
                 {!drawer &&
-                <div className="container">
+                <div className="prkw-container">
                     {wss.messages.length > 0 && wss.messages.map((message, idx) =>
                         <Alert
                             key={idx}
-                            className="alert"
-                            variant={message["type"]}
-                            customIcon={processMessageIcons(message["type"])}
+                            className="prkw-alert"
+                            variant={message.type}
+                            customIcon={processMessageIcons(message.type)}
                             timeout={8000}
-                            title={message["sender"] ? message["sender"]: "NAN"}
+                            title={message.sender ? message.sender: "NAN"}
                             actionClose={<AlertActionCloseButton onClose={() => closeMessage(idx)}/>}
                         >
-                            <Text>{moment(message["date"]).format("LLL")}</Text>
-                            <Text>{message["message"].substring(0, 150) + " ..."}</Text>
+                            <Text>{message.date}</Text>
+                            <Text>{message.message.substring(0, 150) + " ..."}</Text>
                             {appMessagesLocation && <a href={appMessagesLocation}>More...</a>}
                         </Alert>)}
                 </div>}

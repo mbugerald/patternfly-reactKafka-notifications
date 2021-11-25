@@ -1,13 +1,16 @@
-# React-kafka-context
+# patternfly-kafkareact-notifications
+This library is custom react context for handling real time messaging over secured and unsecured `websocket` protocol between `ReactJS` and 
+any given ` Apache Kafka` instances. For it to function its advised to use <a href="https://www.patternfly.org/">Patternfly 4</a> as 
+css base framework. It could still be installed on other existing frameworks but would be creating and extra layer css framework on top of another.
 
 
 #### Installation 
 
-`npm -i patternfly-reactkafka-notifications --save`
+`npm -i patternfly-kafkareact-notifications --save`
 
 or
 
-`yarn add patternfly-reactkafka-notifications`
+`yarn add patternfly-kafkareact-notifications`
 
 <table style="margin: 50px auto;border:0;">
   <tr style="border:0;">
@@ -19,14 +22,11 @@ or
 
 This is a custom react context component, to be used as an exchange point between Kafka
 and any given react application. In order for this to work, it is required that the context 
-be placed as a canopy to the component that will be consuming incoming messages. Unfortunately,
-this is a local library, and it will require you install the following packages for it to run properly.
-Please note the module is build on React Typescript, therefore ensure before using this module 
-that your application is using <b>React + Typescript</b>.
+be placed as a canopy to the component that will be consuming incoming messages.
+Ensure that your application is using <b>React + Typescript</b>.
 
         - @patternfly/react-core
         - @patternfly/react-icons
-        - @patternfly/react-icon
         - websocket && @types/websocket
         - momentjs && @types/momentjs 
 
@@ -54,10 +54,10 @@ pass in the link into this parameter it will display the see all messages. If cl
   
 #### Implementationkafka_sockets
 
-- in your `App.jsx` or preferred child component of choice add the following:
+- In your `App.jsx` or preferred child component of choice add the following:
 
 ```
-    import {KafkaWSSContext} from "patternfly-reactkafka-notifications";
+    import {KafkaWSSContext} from "patternfly-kafkareact-notifications";
     import {NotificationBadge} from "@patternfly/react-core";
     
     const {
@@ -93,11 +93,59 @@ pass in the link into this parameter it will display the see all messages. If cl
     />
 ```
 
- - in your `index.jsx` or parent component of choice add the following:
+ - Create a `patternfly-kafkareact-notifications.css`, the name is no specific. Add the following content to the file,
+and import this file in your `index.tsx` or parent directory where needed.
+   
+```
+.prkw-container {
+    position: absolute;
+    height: 100vh;
+    right: 0;
+    padding: 10px;
+    width: 40%;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.prkw-alert {
+    width: 100%;
+    right: 4px;
+    margin-top: 8px;
+    float: right;
+    overflow: hidden;
+    padding: 1rem;
+    height: 140px;
+    text-overflow: ellipsis;
+}
+
+.prkw-drawer {
+    position: fixed;
+    height: 100vh;
+    right: 0;
+    width: 40%;
+    overflow: hidden;
+    z-index: 2;
+    box-shadow: 0 5px 7px 6px rgba(0,0,0,0.15);
+}
+
+@media screen and (max-width: 991px) {
+    .prkw-container {
+        width: 100%;
+        box-shadow: none;
+    }
+    .prkw-drawer {
+        width: 100%;
+    }
+}
+
+```
+
+ - In your `index.jsx` or parent component of choice add the following:
 ````
    
-  import KafkaWssNotifications from 'patternfly-reactkafka-notifications';
-  
+  import './patternfly-kafkareact-notifications.css';  
+  import KafkaWssNotifications from 'patternfly-kafkareact-notifications';
+    
   const clientId = "xxxxxxx"
   const topic = "xxxxxxx"
 
@@ -116,7 +164,7 @@ pass in the link into this parameter it will display the see all messages. If cl
 When sending a json payload from your backend, through the following link
 send as request the frame below:
 
-        - LINK: wscat  -c "wss://kafka-websocket-proxy.gcloud.bara.ca/socket/in?clientId=clickid&topic=clickid-preproduction&valType=json"
+        - LINK: wscat  -c "wss://xxxxxx.xxx/socket/in?clientId=clickid&topic=clickid-preproduction&valType=json"
         - Request Payload:
             { "value": { "value": {"type":"info", "variant":"message", "sender": "Sam Smith", "message":"this is a test from kafka-web-proxy"}, "format": "json" } }
 
@@ -129,6 +177,6 @@ for the card to be differentiated base on their colors.
     - types:  info | danger | success
     - message: string
     - sender: string
-    - format: string | 
+    - format: string | json
 
 
