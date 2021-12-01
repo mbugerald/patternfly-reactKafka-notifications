@@ -29,6 +29,7 @@ type globals = {
     variant: string
     is_read: boolean
     receiver?: string
+    group?:string;
 }
 
 interface Props {
