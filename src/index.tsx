@@ -81,21 +81,30 @@ const KafkaWssNotifications:FC<Props> = ({
         if(isDrawer) {
             setDrawer(true)
         } else {
-            setDrawer(false)
+            setDrawer(false);
         }
-    }, [ isDrawer ])
+    }, [ isDrawer ]);
 
     const closeMessage = (idx: number) => {
         const temp: Messages = { ...wss };
         temp.messages.splice(idx, 1)
         setWss(temp)
     }
-
+    const [time_, setTime] = useState<number>(1);
     const processIncoming = () => {
-        client.onerror = () => {setError("Connection Error reconnecting...")};
+        client.onerror = () => {
+            if(time_ < 5){
+                setError("Connection Error reconnecting... WebSocket Client.");
+            }else {
+                setTimeout(() => {    
+                    console.log("Reconnecting... ")
+                    setTime(time_ + 1);
+                    processIncoming();
+                }, 2000*time_)
+            }
+        };
         client.onopen = () => {
             console.log('WebSocket Client Connected');
-
             function sendNumber() {
                 if (client.readyState === client.OPEN) {
                     const number = Math.round(Math.random() * 0xFFFFFF);
